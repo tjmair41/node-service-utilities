@@ -14,10 +14,16 @@ function authorize(req, endpoint, authorizationUri, callback) {
     }),
   }, (error, res, body) => {
     if (error != null) {
-      callback(error);
+      callback(new responseClass.ErrorResponse(statusType.ERROR, 'An unknown error occured', error));
     }
 
-    callback(JSON.parse(body));
+    if (res.statusCode === 404) {
+      callback(new responseClass.Response(statusType.ERROR, 'Authorization URL not found.'));
+    } else if (res.statusCode === 500) {
+      callback(new responseClass.Response(statusType.ERROR, 'Unkown authorization error'));
+    } else {
+      callback(new responseClass.Response(statusType.SUCCESS, JSON.parse(body)));      
+    }
   });
 }
 
