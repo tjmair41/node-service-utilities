@@ -1,7 +1,7 @@
 const request = require('request');
 const validator = require('validator');
-const responseClass = require('./response.js').responseClass;
-const statusType = require('./response.js').responseClass.statusType;
+const responseClass = require('./response');
+const statusType = require('./response.js').statusType;
 
 function authorize(req, endpoint, authorizationUri, callback) {
   request.post({
