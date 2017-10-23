@@ -1,5 +1,7 @@
 const request = require('request');
 const validator = require('validator');
+const responseClass = require('./response.js').responseClass;
+const statusType = require('./response.js').responseClass.statusType;
 
 function authorize(req, endpoint, authorizationUri, callback) {
   request.post({
@@ -16,7 +18,6 @@ function authorize(req, endpoint, authorizationUri, callback) {
     if (error != null) {
       callback(new responseClass.ErrorResponse(statusType.ERROR, 'An unknown error occured', error));
     }
-
     if (res.statusCode === 404) {
       callback(new responseClass.Response(statusType.ERROR, 'Authorization URL not found.'));
     } else if (res.statusCode === 500) {
