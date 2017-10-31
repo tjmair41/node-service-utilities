@@ -28,7 +28,7 @@ class PatchBody {
 
     let fields = '';
     for (let i = 0; i < this.body.length; i += 1) {
-      if (this.body[i].op == null || this.body[i].path == null || this.body[i].value == null) {
+      if ((typeof this.body[i].op === 'undefined') || (typeof this.body[i].path === 'undefined') || (typeof this.body[i].value === 'undefined')) {
         return new responseClass.Response(statusType.INVALID, 'Request body must contain keys: op, path and value');
       } else if (this.body[i].op != null && this.body[i].op !== 'replace') {
         return new responseClass.Response(statusType.INVALID, `${this.body[i].op} operation is not currently supported`);
