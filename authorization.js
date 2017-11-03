@@ -17,8 +17,7 @@ function authorize(req, endpoint, authorizationUri, callback) {
   }, (error, res, body) => {
     if (error != null) {
       callback(new responseClass.ErrorResponse(statusType.ERROR, 'An unknown error occured', error));
-    }
-    if ((typeof res === 'undefined')) {
+    } else if ((typeof res === 'undefined')) {
       callback(new responseClass.Response(statusType.ERROR, 'Timed out when making request to Authorization'));
     } else if (res.statusCode === 404) {
       callback(new responseClass.Response(statusType.ERROR, 'Authorization URL not found.'));
