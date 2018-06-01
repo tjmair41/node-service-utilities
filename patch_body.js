@@ -40,6 +40,15 @@ class PatchBody {
     return validation.fieldValidator(fields, this.mutableFields);
   }
 
+  toKeyValue() {
+    const keyValuePairs = {};
+    for (let i = 0; i < this.body.length; i += 1) {
+      const key = snakeCase(this.body[i].path);
+      keyValuePairs[key] = this.body[i].value;
+    }
+    return keyValuePairs;
+  }
+
   toSqlUpdate() {
     let sql = '';
     for (let i = 0; i < this.body.length; i += 1) {

@@ -195,6 +195,18 @@ describe('The validatePatchBody function', () => {
     expect(updateSql).to.equal('uri = \'www.test.com\', offset_y = 22');
     done();
   });
+
+  it('returns valid key value pairs', (done) => {
+    const body = [
+      { op: 'replace', path: 'uri', value: 'www.test.com' },
+      { op: 'replace', path: 'offsetY', value: 22 },
+    ];
+    const mutableFields = ['field1', 'field2'];
+    const patchBody = new patchClass.PatchBody(body, mutableFields);
+    const keyValues = patchBody.toKeyValue();
+    expect(keyValues).to.deep.equal({ uri: 'www.test.com', offset_y: 22 });
+    done();
+  });
 });
 
 describe('The fieldValidator function', () => {
