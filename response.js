@@ -1,3 +1,5 @@
+const xss = require("xss");
+
 const statusType = {
   SUCCESS: 'success',
   ERROR: 'error',
@@ -16,7 +18,7 @@ class Response {
   }
 
   toJsonApiResponse() {
-    return { status: this.status, message: this.message };
+    return { status: this.status, message: xss(this.message) };
   }
 }
 
