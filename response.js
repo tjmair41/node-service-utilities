@@ -1,4 +1,4 @@
-const xss = require("xss");
+const xss = require('xss');
 
 const statusType = {
   SUCCESS: 'success',
