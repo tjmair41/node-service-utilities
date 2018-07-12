@@ -37,4 +37,9 @@ describe('The response module', () => {
     const response = new responseClass.SQLErrorResponse(error);
     expect(response.toJsonApiResponse()).to.deep.equal({ status: 'error', message: `SQL Exception (${error.code}): ${error.message}` });
   });
+
+  it('should sanitize reflectedXSS attacks', () => {
+    const response = new responseClass.Response(statusType.SUCCESS, 'This is a haxxPWNED message <sCrIpT tYpE=tExT/vBsCrIpT>MsgBox(27113) </sCrIpT>');
+    expect(response.toJsonApiResponse()).to.deep.equal({ status: 'success', message: 'This is a haxxPWNED message &lt;sCrIpT tYpE=tExT/vBsCrIpT&gt;MsgBox(27113) &lt;/sCrIpT&gt;' });
+  });
 });
